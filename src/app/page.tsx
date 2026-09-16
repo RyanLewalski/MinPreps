@@ -13,7 +13,7 @@ import {
 // and leaders. For now it doubles as a smoke test for the UI kit and tokens.
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center p-8">
+    <div className="flex flex-1 flex-col items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">MinPreps</CardTitle>
@@ -34,6 +34,6 @@ export default function Home() {
           </Button>
         </CardFooter>
       </Card>
-    </main>
+    </div>
   );
 }
