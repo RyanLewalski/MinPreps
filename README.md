@@ -174,5 +174,12 @@ Account, coach, admin
 
 ## Development
 
-Setup instructions arrive with M0. Expected requirements: Node 20+, Docker
-Desktop (for Postgres), and npm.
+```bash
+npm install
+cp .env.example .env
+npm run db:up
+npm run dev
+```
+
+Requires Node 22, npm, and Docker Desktop. See [CONTRIBUTING.md](CONTRIBUTING.md)
+for the full command list, folder layout, and branch and commit conventions.

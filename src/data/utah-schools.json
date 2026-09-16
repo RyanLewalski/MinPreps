@@ -1,0 +1,474 @@
+{
+  "alignment": "2025-27",
+  "scope": "UHSAA 6A and 5A, all activities except football",
+  "source": "https://www.uhsaa.org/realignment/202527RealignmentFinal.pdf",
+  "note": "Names, cities, mascots, and regions are real. Colors are approximate and used only for theming. Every player, game, and stat in MinPreps is synthetic.",
+  "schools": [
+    {
+      "name": "Davis High School",
+      "shortName": "Davis",
+      "city": "Kaysville",
+      "mascot": "Darts",
+      "classification": "6A",
+      "region": 1,
+      "primaryColor": "#00205b",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Farmington High School",
+      "shortName": "Farmington",
+      "city": "Farmington",
+      "mascot": "Phoenix",
+      "classification": "6A",
+      "region": 1,
+      "primaryColor": "#b31b1b",
+      "secondaryColor": "#f5b400"
+    },
+    {
+      "name": "Layton High School",
+      "shortName": "Layton",
+      "city": "Layton",
+      "mascot": "Lancers",
+      "classification": "6A",
+      "region": 1,
+      "primaryColor": "#00274c",
+      "secondaryColor": "#ffcb05"
+    },
+    {
+      "name": "Syracuse High School",
+      "shortName": "Syracuse",
+      "city": "Syracuse",
+      "mascot": "Titans",
+      "classification": "6A",
+      "region": 1,
+      "primaryColor": "#0c2340",
+      "secondaryColor": "#c8102e"
+    },
+    {
+      "name": "Weber High School",
+      "shortName": "Weber",
+      "city": "Pleasant View",
+      "mascot": "Warriors",
+      "classification": "6A",
+      "region": 1,
+      "primaryColor": "#5b2b82",
+      "secondaryColor": "#ffffff"
+    },
+
+    {
+      "name": "Bingham High School",
+      "shortName": "Bingham",
+      "city": "South Jordan",
+      "mascot": "Miners",
+      "classification": "6A",
+      "region": 2,
+      "primaryColor": "#0b2a5b",
+      "secondaryColor": "#c0c0c0"
+    },
+    {
+      "name": "Cedar Valley High School",
+      "shortName": "Cedar Valley",
+      "city": "Eagle Mountain",
+      "mascot": "Aviators",
+      "classification": "6A",
+      "region": 2,
+      "primaryColor": "#7a1e1e",
+      "secondaryColor": "#a7a9ac"
+    },
+    {
+      "name": "Copper Hills High School",
+      "shortName": "Copper Hills",
+      "city": "West Jordan",
+      "mascot": "Grizzlies",
+      "classification": "6A",
+      "region": 2,
+      "primaryColor": "#0e2a47",
+      "secondaryColor": "#b87333"
+    },
+    {
+      "name": "Herriman High School",
+      "shortName": "Herriman",
+      "city": "Herriman",
+      "mascot": "Mustangs",
+      "classification": "6A",
+      "region": 2,
+      "primaryColor": "#8b1a1a",
+      "secondaryColor": "#000000"
+    },
+    {
+      "name": "Mountain Ridge High School",
+      "shortName": "Mountain Ridge",
+      "city": "Herriman",
+      "mascot": "Sentinels",
+      "classification": "6A",
+      "region": 2,
+      "primaryColor": "#0f3d3e",
+      "secondaryColor": "#c9a227"
+    },
+    {
+      "name": "Riverton High School",
+      "shortName": "Riverton",
+      "city": "Riverton",
+      "mascot": "Silverwolves",
+      "classification": "6A",
+      "region": 2,
+      "primaryColor": "#003366",
+      "secondaryColor": "#c0c0c0"
+    },
+    {
+      "name": "Westlake High School",
+      "shortName": "Westlake",
+      "city": "Saratoga Springs",
+      "mascot": "Thunder",
+      "classification": "6A",
+      "region": 2,
+      "primaryColor": "#000000",
+      "secondaryColor": "#d4af37"
+    },
+
+    {
+      "name": "American Fork High School",
+      "shortName": "American Fork",
+      "city": "American Fork",
+      "mascot": "Cavemen",
+      "classification": "6A",
+      "region": 3,
+      "primaryColor": "#9d2235",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Corner Canyon High School",
+      "shortName": "Corner Canyon",
+      "city": "Draper",
+      "mascot": "Chargers",
+      "classification": "6A",
+      "region": 3,
+      "primaryColor": "#0f2a44",
+      "secondaryColor": "#b5985a"
+    },
+    {
+      "name": "Lehi High School",
+      "shortName": "Lehi",
+      "city": "Lehi",
+      "mascot": "Pioneers",
+      "classification": "6A",
+      "region": 3,
+      "primaryColor": "#5c2d91",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Lone Peak High School",
+      "shortName": "Lone Peak",
+      "city": "Highland",
+      "mascot": "Knights",
+      "classification": "6A",
+      "region": 3,
+      "primaryColor": "#003c71",
+      "secondaryColor": "#c8102e"
+    },
+    {
+      "name": "Skyridge High School",
+      "shortName": "Skyridge",
+      "city": "Lehi",
+      "mascot": "Falcons",
+      "classification": "6A",
+      "region": 3,
+      "primaryColor": "#003366",
+      "secondaryColor": "#c0c0c0"
+    },
+
+    {
+      "name": "Cyprus High School",
+      "shortName": "Cyprus",
+      "city": "Magna",
+      "mascot": "Pirates",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#5c2d91",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Granger High School",
+      "shortName": "Granger",
+      "city": "West Valley City",
+      "mascot": "Lancers",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#003087",
+      "secondaryColor": "#ffb81c"
+    },
+    {
+      "name": "Hillcrest High School",
+      "shortName": "Hillcrest",
+      "city": "Midvale",
+      "mascot": "Huskies",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#005a9c",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Hunter High School",
+      "shortName": "Hunter",
+      "city": "West Valley City",
+      "mascot": "Wolverines",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#8b1a1a",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Kearns High School",
+      "shortName": "Kearns",
+      "city": "Kearns",
+      "mascot": "Cougars",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#8b1a1a",
+      "secondaryColor": "#ffd700"
+    },
+    {
+      "name": "Taylorsville High School",
+      "shortName": "Taylorsville",
+      "city": "Taylorsville",
+      "mascot": "Warriors",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#7a1e1e",
+      "secondaryColor": "#000000"
+    },
+    {
+      "name": "West High School",
+      "shortName": "West",
+      "city": "Salt Lake City",
+      "mascot": "Panthers",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#8b1a1a",
+      "secondaryColor": "#000000"
+    },
+    {
+      "name": "West Jordan High School",
+      "shortName": "West Jordan",
+      "city": "West Jordan",
+      "mascot": "Jaguars",
+      "classification": "5A",
+      "region": 4,
+      "primaryColor": "#6a1b9a",
+      "secondaryColor": "#000000"
+    },
+
+    {
+      "name": "Bonneville High School",
+      "shortName": "Bonneville",
+      "city": "Washington Terrace",
+      "mascot": "Lakers",
+      "classification": "5A",
+      "region": 5,
+      "primaryColor": "#0057b8",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Box Elder High School",
+      "shortName": "Box Elder",
+      "city": "Brigham City",
+      "mascot": "Bees",
+      "classification": "5A",
+      "region": 5,
+      "primaryColor": "#5c2d91",
+      "secondaryColor": "#f5b400"
+    },
+    {
+      "name": "Clearfield High School",
+      "shortName": "Clearfield",
+      "city": "Clearfield",
+      "mascot": "Falcons",
+      "classification": "5A",
+      "region": 5,
+      "primaryColor": "#f26522",
+      "secondaryColor": "#000000"
+    },
+    {
+      "name": "Fremont High School",
+      "shortName": "Fremont",
+      "city": "Plain City",
+      "mascot": "Silverwolves",
+      "classification": "5A",
+      "region": 5,
+      "primaryColor": "#00205b",
+      "secondaryColor": "#c0c0c0"
+    },
+    {
+      "name": "Northridge High School",
+      "shortName": "Northridge",
+      "city": "Layton",
+      "mascot": "Knights",
+      "classification": "5A",
+      "region": 5,
+      "primaryColor": "#0f3d3e",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Roy High School",
+      "shortName": "Roy",
+      "city": "Roy",
+      "mascot": "Royals",
+      "classification": "5A",
+      "region": 5,
+      "primaryColor": "#003366",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "West Field High School",
+      "shortName": "West Field",
+      "city": "West Haven",
+      "mascot": "Longhorns",
+      "classification": "5A",
+      "region": 5,
+      "primaryColor": "#1b3a2d",
+      "secondaryColor": "#d4af37"
+    },
+
+    {
+      "name": "Alta High School",
+      "shortName": "Alta",
+      "city": "Sandy",
+      "mascot": "Hawks",
+      "classification": "5A",
+      "region": 6,
+      "primaryColor": "#000000",
+      "secondaryColor": "#c8102e"
+    },
+    {
+      "name": "Bountiful High School",
+      "shortName": "Bountiful",
+      "city": "Bountiful",
+      "mascot": "Redhawks",
+      "classification": "5A",
+      "region": 6,
+      "primaryColor": "#c8102e",
+      "secondaryColor": "#000000"
+    },
+    {
+      "name": "Brighton High School",
+      "shortName": "Brighton",
+      "city": "Cottonwood Heights",
+      "mascot": "Bengals",
+      "classification": "5A",
+      "region": 6,
+      "primaryColor": "#f26522",
+      "secondaryColor": "#000000"
+    },
+    {
+      "name": "Olympus High School",
+      "shortName": "Olympus",
+      "city": "Holladay",
+      "mascot": "Titans",
+      "classification": "5A",
+      "region": 6,
+      "primaryColor": "#003366",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Skyline High School",
+      "shortName": "Skyline",
+      "city": "Millcreek",
+      "mascot": "Eagles",
+      "classification": "5A",
+      "region": 6,
+      "primaryColor": "#ff8200",
+      "secondaryColor": "#00205b"
+    },
+    {
+      "name": "Viewmont High School",
+      "shortName": "Viewmont",
+      "city": "Bountiful",
+      "mascot": "Vikings",
+      "classification": "5A",
+      "region": 6,
+      "primaryColor": "#0057b8",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Woods Cross High School",
+      "shortName": "Woods Cross",
+      "city": "Woods Cross",
+      "mascot": "Wildcats",
+      "classification": "5A",
+      "region": 6,
+      "primaryColor": "#00205b",
+      "secondaryColor": "#c0c0c0"
+    },
+
+    {
+      "name": "Maple Mountain High School",
+      "shortName": "Maple Mountain",
+      "city": "Spanish Fork",
+      "mascot": "Golden Eagles",
+      "classification": "5A",
+      "region": 7,
+      "primaryColor": "#00205b",
+      "secondaryColor": "#d4af37"
+    },
+    {
+      "name": "Payson High School",
+      "shortName": "Payson",
+      "city": "Payson",
+      "mascot": "Lions",
+      "classification": "5A",
+      "region": 7,
+      "primaryColor": "#8b1a1a",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Pleasant Grove High School",
+      "shortName": "Pleasant Grove",
+      "city": "Pleasant Grove",
+      "mascot": "Vikings",
+      "classification": "5A",
+      "region": 7,
+      "primaryColor": "#006341",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Salem Hills High School",
+      "shortName": "Salem Hills",
+      "city": "Salem",
+      "mascot": "Skyhawks",
+      "classification": "5A",
+      "region": 7,
+      "primaryColor": "#0f3d3e",
+      "secondaryColor": "#b5985a"
+    },
+    {
+      "name": "Spanish Fork High School",
+      "shortName": "Spanish Fork",
+      "city": "Spanish Fork",
+      "mascot": "Dons",
+      "classification": "5A",
+      "region": 7,
+      "primaryColor": "#8b1a1a",
+      "secondaryColor": "#ffffff"
+    },
+    {
+      "name": "Springville High School",
+      "shortName": "Springville",
+      "city": "Springville",
+      "mascot": "Red Devils",
+      "classification": "5A",
+      "region": 7,
+      "primaryColor": "#c8102e",
+      "secondaryColor": "#000000"
+    },
+    {
+      "name": "Timpview High School",
+      "shortName": "Timpview",
+      "city": "Provo",
+      "mascot": "Thunderbirds",
+      "classification": "5A",
+      "region": 7,
+      "primaryColor": "#00205b",
+      "secondaryColor": "#f26522"
+    }
+  ]
+}
