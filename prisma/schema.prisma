@@ -55,6 +55,12 @@ enum StatFormat {
   PERCENT // 0.457 displayed as 45.7%
 }
 
+enum Role {
+  FAN
+  COACH
+  ADMIN
+}
+
 enum GameStatus {
   SCHEDULED
   FINAL
@@ -93,10 +99,11 @@ model Season {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sport   Sport    @relation(fields: [sportId], references: [id])
-  leagues League[]
-  teams   Team[]
-  games   Game[]
+  sport    Sport     @relation(fields: [sportId], references: [id])
+  leagues  League[]
+  teams    Team[]
+  games    Game[]
+  rankings Ranking[]
 
   @@unique([sportId, slug])
 }
@@ -158,13 +165,16 @@ model Team {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  school    School           @relation(fields: [schoolId], references: [id])
-  season    Season           @relation(fields: [seasonId], references: [id])
-  league    League?          @relation(fields: [leagueId], references: [id])
-  roster    RosterEntry[]
-  homeGames Game[]           @relation("HomeGames")
-  awayGames Game[]           @relation("AwayGames")
-  gameStats PlayerGameStat[]
+  school           School            @relation(fields: [schoolId], references: [id])
+  season           Season            @relation(fields: [seasonId], references: [id])
+  league           League?           @relation(fields: [leagueId], references: [id])
+  roster           RosterEntry[]
+  homeGames        Game[]            @relation("HomeGames")
+  awayGames        Game[]            @relation("AwayGames")
+  gameStats        PlayerGameStat[]
+  rankings         Ranking[]
+  coachAssignments CoachAssignment[]
+  follows          Follow[]
 
   @@unique([schoolId, seasonId, level])
   @@index([seasonId, leagueId])
@@ -305,4 +315,82 @@ model PlayerGameStat {
   @@index([playerId, gameId])
   @@index([teamId, gameId])
   @@index([values], type: Gin)
+}
+
+// ---------------------------------------------------------------------------
+// Rankings
+// ---------------------------------------------------------------------------
+
+/// One team's computer rating at one point in time. A recompute writes one
+/// row per team sharing the same `computedAt`, so a snapshot is the set of
+/// rows with that timestamp. Keeping every snapshot lets the UI show movement
+/// week over week.
+///
+/// rating = mov + sos (Simple Rating System). See src/lib/rankings.
+model Ranking {
+  id          String   @id @default(cuid())
+  teamId      String
+  seasonId    String
+  rating      Float
+  mov         Float // average margin of victory, capped, home-adjusted
+  sos         Float // strength of schedule: average opponent rating
+  gamesPlayed Int
+  wins        Int
+  losses      Int
+  rankOverall Int
+  rankInClass Int
+  computedAt  DateTime
+
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  season Season @relation(fields: [seasonId], references: [id])
+
+  @@unique([teamId, computedAt])
+  @@index([seasonId, computedAt, rankOverall])
+  @@index([seasonId, computedAt, rankInClass])
+}
+
+// ---------------------------------------------------------------------------
+// Accounts
+// ---------------------------------------------------------------------------
+
+/// A login. Fans self-register; admins promote coaches and admins.
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  displayName  String?
+  role         Role     @default(FAN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  coachAssignments CoachAssignment[]
+  follows          Follow[]
+}
+
+/// Grants a coach edit rights on one team. A coach can hold several.
+model CoachAssignment {
+  id        String   @id @default(cuid())
+  userId    String
+  teamId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teamId])
+  @@index([teamId])
+}
+
+/// A fan following a team. Drives the My Teams page.
+model Follow {
+  id        String   @id @default(cuid())
+  userId    String
+  teamId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teamId])
+  @@index([teamId])
 }
