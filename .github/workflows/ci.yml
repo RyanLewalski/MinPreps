@@ -48,7 +48,7 @@ jobs:
         run: npm run format:check
 
       - name: Unit tests
-        run: npm test --if-present
+        run: npm test
 
   build:
     name: Build

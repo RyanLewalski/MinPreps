@@ -1,0 +1,26 @@
+import { fileURLToPath } from "node:url";
+
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  resolve: {
+    // Mirror the "@/*" path alias from tsconfig.json.
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+  test: {
+    environment: "node",
+    include: ["src/**/*.test.{ts,tsx}", "scripts/**/*.test.ts"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/generated/**",
+        "src/components/ui/**",
+        "src/**/*.test.{ts,tsx}",
+      ],
+    },
+  },
+});
