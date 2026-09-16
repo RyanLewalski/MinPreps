@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+build
+coverage
+package-lock.json
+next-env.d.ts
+*.tsbuildinfo
+public
+.vercel
+# Rewritten by `next dev`; leave its formatting alone.
+AGENTS.md
+
+# Prisma generated client
+src/generated
