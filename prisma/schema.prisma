@@ -40,6 +40,21 @@ enum Level {
   FRESHMAN
 }
 
+/// How a stat is produced.
+enum StatKind {
+  /// Entered per game and summed over a season: pts, reb, ast ...
+  COUNTING
+  /// Computed from counting stats via `formula`: fg_pct = fgm / fga
+  DERIVED
+}
+
+/// How a stat value is displayed.
+enum StatFormat {
+  INTEGER
+  DECIMAL_1 // one decimal place, e.g. per-game averages 18.4
+  PERCENT // 0.457 displayed as 45.7%
+}
+
 enum GameStatus {
   SCHEDULED
   FINAL
@@ -61,7 +76,8 @@ model Sport {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  seasons Season[]
+  seasons         Season[]
+  statDefinitions StatDefinition[]
 
   @@unique([name, gender])
 }
@@ -142,12 +158,13 @@ model Team {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  school    School        @relation(fields: [schoolId], references: [id])
-  season    Season        @relation(fields: [seasonId], references: [id])
-  league    League?       @relation(fields: [leagueId], references: [id])
+  school    School           @relation(fields: [schoolId], references: [id])
+  season    Season           @relation(fields: [seasonId], references: [id])
+  league    League?          @relation(fields: [leagueId], references: [id])
   roster    RosterEntry[]
-  homeGames Game[]        @relation("HomeGames")
-  awayGames Game[]        @relation("AwayGames")
+  homeGames Game[]           @relation("HomeGames")
+  awayGames Game[]           @relation("AwayGames")
+  gameStats PlayerGameStat[]
 
   @@unique([schoolId, seasonId, level])
   @@index([seasonId, leagueId])
@@ -167,8 +184,9 @@ model Player {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  school        School        @relation(fields: [schoolId], references: [id])
+  school        School           @relation(fields: [schoolId], references: [id])
   rosterEntries RosterEntry[]
+  gameStats     PlayerGameStat[]
 
   @@index([schoolId])
   @@index([lastName, firstName])
@@ -214,12 +232,77 @@ model Game {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
-  season   Season @relation(fields: [seasonId], references: [id])
-  homeTeam Team   @relation("HomeGames", fields: [homeTeamId], references: [id])
-  awayTeam Team   @relation("AwayGames", fields: [awayTeamId], references: [id])
+  season   Season           @relation(fields: [seasonId], references: [id])
+  homeTeam Team             @relation("HomeGames", fields: [homeTeamId], references: [id])
+  awayTeam Team             @relation("AwayGames", fields: [awayTeamId], references: [id])
+  stats    PlayerGameStat[]
 
   @@index([seasonId, startsAt])
   @@index([homeTeamId, startsAt])
   @@index([awayTeamId, startsAt])
   @@index([status, startsAt])
+}
+
+// ---------------------------------------------------------------------------
+// Stats
+// ---------------------------------------------------------------------------
+
+/// Describes one stat for one sport. Adding a sport means inserting rows here,
+/// not migrating. The `key` is the JSON key used inside PlayerGameStat.values.
+model StatDefinition {
+  id             String     @id @default(cuid())
+  sportId        String
+  key            String // "pts", "fgm", "fg_pct"
+  label          String // "Points"
+  shortLabel     String // "PTS"
+  kind           StatKind
+  format         StatFormat @default(INTEGER)
+  /// For DERIVED stats only: an expression over counting-stat keys using
+  /// + - * / and parentheses, e.g. "fgm / fga" or "oreb + dreb".
+  formula        String?
+  /// False for stats where lower is better (turnovers, fouls). Controls
+  /// leaderboard sort direction.
+  higherIsBetter Boolean    @default(true)
+  /// Show on leaderboards and stat tables by default.
+  isFeatured     Boolean    @default(true)
+  sortOrder      Int
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  sport Sport @relation(fields: [sportId], references: [id], onDelete: Cascade)
+
+  @@unique([sportId, key])
+  @@index([sportId, sortOrder])
+}
+
+/// One player's line in one game's box score.
+///
+/// `values` is JSONB: a flat object of counting-stat key -> integer, where
+/// the keys are the sport's COUNTING StatDefinition keys. Missing keys mean
+/// zero. Derived stats are never stored. Example for basketball:
+///
+///   { "min": 28, "pts": 17, "fgm": 6, "fga": 13, "tpm": 2, "tpa": 5,
+///     "ftm": 3, "fta": 4, "oreb": 1, "dreb": 5, "ast": 4, "stl": 2,
+///     "blk": 0, "tov": 3, "pf": 2 }
+///
+/// Aggregations read keys with (values->>'pts')::int. The GIN index supports
+/// key-existence and containment filters such as values ? 'pts'.
+model PlayerGameStat {
+  id        String   @id @default(cuid())
+  gameId    String
+  teamId    String // denormalized from the roster for fast per-team queries
+  playerId  String
+  started   Boolean  @default(false)
+  values    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  team   Team   @relation(fields: [teamId], references: [id])
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@unique([gameId, playerId])
+  @@index([playerId, gameId])
+  @@index([teamId, gameId])
+  @@index([values], type: Gin)
 }
