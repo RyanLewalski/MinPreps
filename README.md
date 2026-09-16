@@ -1,5 +1,7 @@
 # MinPreps
 
+[![CI](https://github.com/RyanLewalski/MinPreps/actions/workflows/ci.yml/badge.svg)](https://github.com/RyanLewalski/MinPreps/actions/workflows/ci.yml)
+
 Similar to MaxPreps but better!
 
 MinPreps is a small, fast, ad-free high school sports site for Utah. Coaches
