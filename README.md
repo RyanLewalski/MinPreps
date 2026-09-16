@@ -33,11 +33,11 @@ it better:
 
 ## Who uses it
 
-| Role  | Login | Can do                                                                 |
-|-------|-------|------------------------------------------------------------------------|
-| Fan   | Optional | Browse everything. With an account: follow teams, see a My Teams page. |
+| Role  | Login    | Can do                                                                          |
+| ----- | -------- | ------------------------------------------------------------------------------- |
+| Fan   | Optional | Browse everything. With an account: follow teams, see a My Teams page.          |
 | Coach | Required | Edit roster and schedule for assigned teams. Enter final scores and box scores. |
-| Admin | Required | Create schools, leagues, seasons, teams. Assign coaches. Edit anything. |
+| Admin | Required | Create schools, leagues, seasons, teams. Assign coaches. Edit anything.         |
 
 ## Features (MVP)
 
@@ -78,16 +78,16 @@ team comparison pages, a public read-only JSON API.
 
 ## Tech stack
 
-| Layer      | Choice                              |
-|------------|-------------------------------------|
-| Framework  | Next.js (App Router) + TypeScript   |
-| Database   | Postgres (local via Docker Compose) |
-| ORM        | Prisma                              |
-| UI         | Tailwind CSS + shadcn/ui            |
-| Auth       | Auth.js, credentials provider       |
-| Validation | Zod                                 |
-| Tests      | Vitest (unit), Playwright (e2e)     |
-| CI         | GitHub Actions                      |
+| Layer      | Choice                                          |
+| ---------- | ----------------------------------------------- |
+| Framework  | Next.js (App Router) + TypeScript               |
+| Database   | Postgres (local via Docker Compose)             |
+| ORM        | Prisma                                          |
+| UI         | Tailwind CSS + shadcn/ui                        |
+| Auth       | Auth.js, credentials provider                   |
+| Validation | Zod                                             |
+| Tests      | Vitest (unit), Playwright (e2e)                 |
+| CI         | GitHub Actions                                  |
 | Hosting    | Undecided. Not a concern until the MVP is done. |
 
 ## Architecture
@@ -159,16 +159,16 @@ Account, coach, admin
 
 ## Roadmap
 
-| #  | Milestone              | Outcome                                                        |
-|----|------------------------|----------------------------------------------------------------|
-| M0 | Foundation             | Scaffold, tooling, local Postgres, CI.                         |
-| M1 | Data model and seed    | Prisma schema, Utah school dataset, full synthetic season.     |
-| M2 | Public read pages      | School, team, schedule, game, player, and search pages.        |
-| M3 | Standings and leaders  | Standings per region, leaderboards on JSONB, unit tests.       |
-| M4 | Accounts and roles     | Register, login, roles, follow teams, My Teams.                |
-| M5 | Coach and admin tools  | Dashboard, roster and schedule editing, box score entry, admin console. |
-| M6 | Rankings and home      | SRS rankings with snapshots and explanations, scoreboard, home page. |
-| M7 | Release candidate      | E2E tests, performance and accessibility pass, docs.           |
+| #   | Milestone             | Outcome                                                                 |
+| --- | --------------------- | ----------------------------------------------------------------------- |
+| M0  | Foundation            | Scaffold, tooling, local Postgres, CI.                                  |
+| M1  | Data model and seed   | Prisma schema, Utah school dataset, full synthetic season.              |
+| M2  | Public read pages     | School, team, schedule, game, player, and search pages.                 |
+| M3  | Standings and leaders | Standings per region, leaderboards on JSONB, unit tests.                |
+| M4  | Accounts and roles    | Register, login, roles, follow teams, My Teams.                         |
+| M5  | Coach and admin tools | Dashboard, roster and schedule editing, box score entry, admin console. |
+| M6  | Rankings and home     | SRS rankings with snapshots and explanations, scoreboard, home page.    |
+| M7  | Release candidate     | E2E tests, performance and accessibility pass, docs.                    |
 
 ## Development
 
