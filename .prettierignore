@@ -10,3 +10,6 @@ public
 .vercel
 # Rewritten by `next dev`; leave its formatting alone.
 AGENTS.md
+
+# Prisma generated client
+src/generated

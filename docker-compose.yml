@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: minpreps-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: minpreps
+      POSTGRES_PASSWORD: minpreps
+      POSTGRES_DB: minpreps
+    ports:
+      # Override with DB_PORT in .env if 5432 is taken on your machine.
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - minpreps-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U minpreps -d minpreps"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  minpreps-pgdata:
