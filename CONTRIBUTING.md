@@ -55,7 +55,7 @@ src/
     ui/              shadcn/ui primitives. Generated; edit sparingly.
     ...              app-specific components, grouped by feature
   lib/               small pure helpers shared everywhere (db, slug, utils)
-  server/            (planned) database queries and server actions
+  server/            database access: queries/ (cached reads), cache-tags.ts
   generated/         Prisma client output. Gitignored, rebuilt on install.
 ```
 
@@ -66,6 +66,9 @@ Rules of thumb:
   or database.
 - **Routes stay thin.** A page fetches through a query function and renders.
   No business logic inside `page.tsx`.
+- **Pages read through `@/server/queries`, never `db` directly.** Every
+  query is a `"use cache"` function tagged with builders from
+  `src/server/cache-tags.ts`. Mutations invalidate with the same builders.
 - **Tests sit next to the code** as `name.test.ts`.
 - **Imports use the `@/` alias**, never long relative paths.
 - **Do not edit `src/generated`.** Change the schema and regenerate.
