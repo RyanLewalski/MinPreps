@@ -1,7 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// MinPreps data model. See README.md "Data model" for the overview.
+//
+// Conventions
+// - Every table has a cuid `id`, plus createdAt/updatedAt.
+// - Anything that appears in a URL has a `slug`.
+// - Season-scoped things (League, Team, Game) hang off Season so the same
+//   school can be reorganized every year without touching history.
 
 generator client {
   provider = "prisma-client"
@@ -10,4 +13,213 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+/// UHSAA classification. Stored as "6A" .. "1A".
+enum Classification {
+  SIX_A   @map("6A")
+  FIVE_A  @map("5A")
+  FOUR_A  @map("4A")
+  THREE_A @map("3A")
+  TWO_A   @map("2A")
+  ONE_A   @map("1A")
+}
+
+enum Gender {
+  BOYS
+  GIRLS
+}
+
+enum Level {
+  VARSITY
+  JV
+  FRESHMAN
+}
+
+enum GameStatus {
+  SCHEDULED
+  FINAL
+  POSTPONED
+  CANCELED
+}
+
+// ---------------------------------------------------------------------------
+// Reference data
+// ---------------------------------------------------------------------------
+
+/// A sport plus gender, e.g. Boys Basketball. Stat definitions attach here
+/// (next issue) so each sport can have its own box score shape.
+model Sport {
+  id        String   @id @default(cuid())
+  slug      String   @unique // "boys-basketball"
+  name      String // "Basketball"
+  gender    Gender
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  seasons Season[]
+
+  @@unique([name, gender])
+}
+
+/// One competitive year of one sport, e.g. 2025-26 Boys Basketball.
+model Season {
+  id        String   @id @default(cuid())
+  sportId   String
+  slug      String // "2025-26"
+  label     String // "2025-26"
+  startDate DateTime @db.Date
+  endDate   DateTime @db.Date
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sport   Sport    @relation(fields: [sportId], references: [id])
+  leagues League[]
+  teams   Team[]
+  games   Game[]
+
+  @@unique([sportId, slug])
+}
+
+/// A high school. Classification here is the school's *current* class for
+/// display and filtering; the class a team actually competed in for a given
+/// season lives on its League.
+model School {
+  id             String         @id @default(cuid())
+  slug           String         @unique // "bingham"
+  name           String // "Bingham High School"
+  shortName      String // "Bingham"
+  city           String
+  mascot         String
+  classification Classification
+  primaryColor   String? // hex, e.g. "#0f2d5c"
+  secondaryColor String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  teams   Team[]
+  players Player[]
+
+  @@index([classification])
+  @@index([name])
+}
+
+/// A region within a classification for one season, e.g. "Region 4".
+/// Standings are computed per league.
+model League {
+  id             String         @id @default(cuid())
+  seasonId       String
+  slug           String // "region-4"
+  name           String // "Region 4"
+  classification Classification
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  season Season @relation(fields: [seasonId], references: [id])
+  teams  Team[]
+
+  @@unique([seasonId, slug])
+  @@index([seasonId, classification])
+}
+
+// ---------------------------------------------------------------------------
+// Teams and people
+// ---------------------------------------------------------------------------
+
+/// One school's squad at one level for one season. This is the hub entity:
+/// schedule, roster, stats, and rank all attach here.
+model Team {
+  id        String   @id @default(cuid())
+  slug      String   @unique // "bingham-boys-basketball-2025-26"
+  schoolId  String
+  seasonId  String
+  leagueId  String? // null for independents
+  level     Level    @default(VARSITY)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school    School        @relation(fields: [schoolId], references: [id])
+  season    Season        @relation(fields: [seasonId], references: [id])
+  league    League?       @relation(fields: [leagueId], references: [id])
+  roster    RosterEntry[]
+  homeGames Game[]        @relation("HomeGames")
+  awayGames Game[]        @relation("AwayGames")
+
+  @@unique([schoolId, seasonId, level])
+  @@index([seasonId, leagueId])
+  @@index([leagueId])
+}
+
+/// A person. Belongs to a school; joins teams through RosterEntry so the
+/// same player carries across seasons and levels.
+model Player {
+  id        String   @id @default(cuid())
+  slug      String   @unique // "jack-smith" or "jack-smith-2"
+  firstName String
+  lastName  String
+  gradYear  Int
+  heightIn  Int? // total inches, e.g. 74 = 6'2"
+  schoolId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school        School        @relation(fields: [schoolId], references: [id])
+  rosterEntries RosterEntry[]
+
+  @@index([schoolId])
+  @@index([lastName, firstName])
+  @@index([gradYear])
+}
+
+/// A player's spot on one team for one season.
+model RosterEntry {
+  id        String   @id @default(cuid())
+  teamId    String
+  playerId  String
+  jersey    String? // string: "00" and "0" are different numbers
+  position  String? // "G", "F", "C", "G/F" ...
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, playerId])
+  @@index([playerId])
+}
+
+// ---------------------------------------------------------------------------
+// Games
+// ---------------------------------------------------------------------------
+
+/// One contest between two teams. Scores are null until status is FINAL.
+/// Box scores (PlayerGameStat) attach in the next issue.
+model Game {
+  id           String     @id @default(cuid())
+  seasonId     String
+  homeTeamId   String
+  awayTeamId   String
+  startsAt     DateTime
+  venue        String?
+  neutralSite  Boolean    @default(false)
+  isLeagueGame Boolean    @default(false)
+  status       GameStatus @default(SCHEDULED)
+  homeScore    Int?
+  awayScore    Int?
+  notes        String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  season   Season @relation(fields: [seasonId], references: [id])
+  homeTeam Team   @relation("HomeGames", fields: [homeTeamId], references: [id])
+  awayTeam Team   @relation("AwayGames", fields: [awayTeamId], references: [id])
+
+  @@index([seasonId, startsAt])
+  @@index([homeTeamId, startsAt])
+  @@index([awayTeamId, startsAt])
+  @@index([status, startsAt])
 }
